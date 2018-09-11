@@ -15,7 +15,7 @@ class MailerMessage(models.Model):
     def get_connection_settings(cls, email):
         for item in conf.MAILQUEUE_SERVER_SETTINGS:
             to_regex = item.get('to_regex', '^.*$')
-            if isinstance(to_regex, basestring):
+            if isinstance(to_regex, str):
                 to_regex = re.compile(to_regex)
 
             if to_regex.match(email):
@@ -59,8 +59,8 @@ class MailerMessage(models.Model):
     html_message = models.TextField(ugettext_lazy('html message'), blank=True, default='')
     attach = models.FileField(upload_to='attach', editable=False, blank=True, null=True)
 
-    def __unicode__(self):
-        return u'[{0}] {1} -> {2} [{3}]'.format(
+    def __str__(self):
+        return '[{0}] {1} -> {2} [{3}]'.format(
             self.create_datetime,
             self.from_email,
             self.to_email,
